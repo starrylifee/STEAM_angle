@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STEAM 각도 놀이터</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="page-shell">
+        <header class="hero">
+            <div class="hero-heading">
+                <div>
+                    <p class="eyebrow">4학년 각도 프로젝트</p>
+                    <h1>각도 게임</h1>
+                </div>
+                <div class="hero-art" aria-hidden="true">
+                    <svg viewBox="0 0 180 120">
+                        <defs>
+                            <linearGradient id="heroGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#fff4c6"/>
+                                <stop offset="100%" stop-color="#ffe0a8"/>
+                            </linearGradient>
+                        </defs>
+                        <rect x="10" y="10" width="160" height="100" rx="24" fill="url(#heroGrad)"/>
+                        <path d="M48 84 L88 84 L88 42" fill="none" stroke="#17324d" stroke-width="8" stroke-linecap="round"/>
+                        <path d="M88 84 A36 36 0 0 0 124 48" fill="none" stroke="#ff8c42" stroke-width="8" stroke-linecap="round"/>
+                        <circle cx="88" cy="84" r="7" fill="#17324d"/>
+                        <circle cx="124" cy="48" r="6" fill="#ff8c42"/>
+                        <path d="M124 32 L130 18 L136 32" fill="#2a9d8f"/>
+                        <text x="118" y="93" font-family="Malgun Gothic, sans-serif" font-size="18" font-weight="700" fill="#17324d">90°</text>
+                    </svg>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <section class="section-block lobby-section">
+                <div class="section-heading">
+                    <div>
+                        <p class="section-kicker">Game List</p>
+                    </div>
+                </div>
+                <div id="game-grid" class="title-list" aria-label="각도 게임 목록"></div>
+            </section>
+        </main>
+    </div>
+
+    <div id="game-modal" class="game-modal hidden" aria-live="polite">
+        <div id="game-modal-backdrop" class="game-modal-backdrop"></div>
+        <button id="modal-home-button" class="modal-home-button" type="button" aria-label="메인으로 돌아가기">🏠 메인</button>
+        <section class="game-modal-card">
+            <div class="modal-head">
+                <div>
+                    <div>
+                        <p class="section-kicker">Game Window</p>
+                        <h2 id="stage-title">1번 게임 · 각도 퍼즐을 찾아라!</h2>
+                    </div>
+                    <p id="modal-subtitle" class="modal-subtitle">게임을 시작해 보세요.</p>
+                    <p id="modal-credit" class="modal-credit">제작: 학생 모둠</p>
+                </div>
+            </div>
+            <div id="modal-illustration" class="modal-illustration" aria-hidden="true"></div>
+
+            <div id="placeholder-panel" class="placeholder-panel hidden">
+                <h3 id="placeholder-title">준비 중</h3>
+                <p id="placeholder-text">이 게임은 곧 연결됩니다.</p>
+            </div>
+
+            <section id="game-stage-section" class="game-stage-section hidden">
+                <div class="stage-intro">
+                    <div>
+                        <strong>포인트</strong>
+                        <span>각도 맞히기</span>
+                    </div>
+                    <div>
+                        <strong>조작</strong>
+                        <span>Space 점프</span>
+                    </div>
+                </div>
+                <div class="game-panel">
+                    <div id="game-wrapper" class="game-wrapper">
+                        <canvas id="gameCanvas" width="800" height="500" class="game-canvas" aria-label="각도 퍼즐 게임 화면"></canvas>
+
+                        <div id="ui-layer" class="ui-layer">
+                            <div class="ui-topbar">
+                                <div class="pill-cluster">
+                                    <div class="status-pill">
+                                        <span class="pill-symbol">❤️</span>
+                                        <div class="heart-track" id="health-tracker"></div>
+                                    </div>
+                                    <div class="status-pill" title="남은 2단 점프 횟수">
+                                        <span class="pill-symbol">👟</span>
+                                        <div class="pill-value accent-cyan" id="djump-tracker">5</div>
+                                    </div>
+                                    <div class="status-pill">
+                                        <span class="pill-symbol">🧩</span>
+                                        <div class="puzzle-track" id="puzzle-tracker"></div>
+                                    </div>
+                                </div>
+                                <div class="pill-column">
+                                    <div class="stage-badge">
+                                        <span id="stage-indicator">STAGE 1</span>
+                                    </div>
+                                    <div class="status-pill compact-pill">
+                                        거리: <span class="accent-yellow" id="distance-meter">0</span>m
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="stage-up-banner" class="stage-up-banner hidden">STAGE 2 진입! 🔥</div>
+
+                            <div id="quiz-modal" class="quiz-modal interactive hidden" role="dialog" aria-modal="true" aria-label="각도 퀴즈">
+                                <div class="quiz-tag">각도를 맞춰라!</div>
+                                <div class="quiz-preview">
+                                    <canvas id="quizCanvas" width="240" height="120" aria-label="각도 문제"></canvas>
+                                </div>
+                                <div id="options-grid" class="options-grid"></div>
+                                <div id="feedback" class="feedback-text"></div>
+                            </div>
+                        </div>
+
+                        <div id="start-screen" class="screen start-screen interactive">
+                            <div class="screen-emoji">📐</div>
+                            <h3>각도 퍼즐을 찾아라!</h3>
+                            <p class="screen-copy"><span class="accent-yellow">Space</span>로 점프하고 퍼즐 9개를 모으세요.</p>
+                            <div class="screen-actions">
+                                <button id="game-start-button" class="primary-btn">모험 시작!</button>
+                                <p class="credit-text">제작: 고양이 · 송아지 · 복숭아7호</p>
+                            </div>
+                        </div>
+
+                        <div id="end-screen" class="screen end-screen interactive hidden">
+                            <h3>퍼즐 마스터 탄생! 🎉</h3>
+                            <div id="star-rating" class="star-rating"></div>
+                            <p id="timestamp-display" class="timestamp-display"></p>
+                            <div class="final-puzzle-view" id="final-puzzle-view"></div>
+                            <div class="screen-actions">
+                                <div class="button-row">
+                                    <button id="download-button" class="success-btn">인증서 저장</button>
+                                    <button id="restart-from-end-button" class="secondary-btn">다시 도전</button>
+                                </div>
+                                <button id="end-back-button" class="ghost-btn light-ghost">게임 목록으로</button>
+                                <p class="credit-text dark-credit">제작: 고양이 · 송아지 · 복숭아7호</p>
+                            </div>
+                        </div>
+
+                        <div id="gameover-screen" class="screen gameover-screen interactive hidden">
+                            <h3>앗, 게임 오버! 💦</h3>
+                            <p class="screen-copy">장애물에 너무 많이 부딪혔어요.</p>
+                            <div class="screen-actions">
+                                <div class="button-row">
+                                    <button id="restart-from-gameover-button" class="primary-btn">다시 도전하기</button>
+                                    <button id="gameover-back-button" class="ghost-btn light-ghost">게임 목록으로</button>
+                                </div>
+                                <p class="credit-text">제작: 고양이 · 송아지 · 복숭아7호</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <canvas id="certCanvas" width="800" height="600" class="hidden" aria-hidden="true"></canvas>
+                </div>
+            </section>
+
+            <section id="monster-stage-section" class="monster-stage-section hidden">
+                <div id="monster-start-screen" class="monster-card">
+                    <div class="monster-card-art">🐾</div>
+                    <h3>각도를 어림해서 몬스터를 동료로 만들어라</h3>
+                    <p class="monster-card-copy">각도를 보고 5개 보기 중에서 고르세요. 정답이면 몬스터를 공격하고, 쓰러뜨리면 동료가 됩니다.</p>
+                    <button id="monster-start-button" class="primary-btn">2번 게임 시작</button>
+                </div>
+
+                <div id="monster-win-screen" class="monster-card hidden">
+                    <div class="monster-card-art">🎉</div>
+                    <h3>몬스터 친구 완성!</h3>
+                    <p class="monster-card-copy">각도를 어림해서 몬스터 팀을 모두 모았어요.</p>
+                    <div id="monster-win-allies" class="monster-win-allies"></div>
+                    <button id="monster-restart-button" class="secondary-btn">다시 도전</button>
+                </div>
+
+                <div id="monster-lose-screen" class="monster-card hidden">
+                    <div class="monster-card-art">💥</div>
+                    <h3>아쉽게 실패!</h3>
+                    <p class="monster-card-copy">체력이 모두 닳았어요. 다시 각도를 맞혀 볼까요?</p>
+                    <button id="monster-retry-button" class="primary-btn">다시 도전</button>
+                </div>
+
+                <div id="monster-game-shell" class="monster-game-shell hidden">
+                    <aside class="monster-sidebar">
+                        <div class="monster-panel hero-panel-card">
+                            <div id="monster-hero-figure" class="monster-hero-figure" aria-hidden="true"></div>
+                            <div class="monster-stat-grid">
+                                <div class="monster-stat-box">
+                                    <span>체력</span>
+                                    <strong id="monster-player-hp">120</strong>
+                                </div>
+                                <div class="monster-stat-box">
+                                    <span>포인트</span>
+                                    <strong id="monster-points">150</strong>
+                                </div>
+                                <div class="monster-stat-box">
+                                    <span>라운드</span>
+                                    <strong id="monster-round">1 / 4</strong>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="monster-panel">
+                            <div class="monster-panel-head">
+                                <h4>랜덤박스</h4>
+                                <button id="monster-buy-button" class="ghost-btn">100 포인트</button>
+                            </div>
+                            <p id="monster-box-feedback" class="monster-small-copy">무기나 회복 아이템이 랜덤으로 나와요.</p>
+                        </div>
+
+                        <div class="monster-panel">
+                            <div class="monster-panel-head">
+                                <h4>인벤토리</h4>
+                            </div>
+                            <div id="monster-inventory" class="monster-chip-list"></div>
+                        </div>
+
+                        <div class="monster-panel">
+                            <div class="monster-panel-head">
+                                <h4>동료 몬스터</h4>
+                            </div>
+                            <div id="monster-allies" class="monster-chip-list"></div>
+                        </div>
+                    </aside>
+
+                    <div class="monster-main">
+                        <div id="monster-scene" class="monster-scene scene-day">
+                            <div id="monster-scene-art" class="monster-scene-art" aria-hidden="true"></div>
+                        </div>
+
+                        <div class="monster-panel battle-panel">
+                            <div class="monster-foe-row">
+                                <div id="monster-foe-figure" class="monster-foe-figure" aria-hidden="true"></div>
+                                <div class="monster-foe-meta">
+                                    <div class="monster-foe-name-row">
+                                        <h4 id="monster-foe-name">뿔몬</h4>
+                                        <span id="monster-foe-hp">110 / 110</span>
+                                    </div>
+                                    <div class="monster-hp-bar">
+                                        <div id="monster-foe-hp-fill" class="monster-hp-fill"></div>
+                                    </div>
+                                    <p class="monster-small-copy">정답이면 몬스터를 공격하고, 틀리면 내 체력이 줄어요.</p>
+                                </div>
+                            </div>
+
+                            <div class="monster-angle-wrap">
+                                <canvas id="monster-angle-canvas" width="320" height="180" aria-label="2번 게임 각도 문제"></canvas>
+                            </div>
+
+                            <div id="monster-options" class="monster-options"></div>
+                            <div id="monster-feedback" class="monster-feedback"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="ghost-stage-section" class="ghost-stage-section hidden">
+                <div id="ghost-start-screen" class="ghost-card">
+                    <div class="ghost-card-art">🔦</div>
+                    <h3>새벽 3시 귀신 스쿨</h3>
+                    <p class="ghost-card-copy">어두운 교실을 비추며 숨은 귀신을 찾으세요. 귀신이 내는 각도 문제를 맞히면 열쇠를 얻고, 열쇠 3개를 모으면 탈출할 수 있어요.</p>
+                    <button id="ghost-start-button" class="primary-btn">3번 게임 시작</button>
+                </div>
+
+                <div id="ghost-win-screen" class="ghost-card hidden">
+                    <div class="ghost-card-art">🚪</div>
+                    <h3>탈출 성공!</h3>
+                    <p class="ghost-card-copy">숨은 귀신을 모두 찾고 열쇠 3개로 문을 열었어요.</p>
+                    <button id="ghost-restart-button" class="secondary-btn">다시 도전</button>
+                </div>
+
+                <div id="ghost-game-shell" class="ghost-game-shell hidden">
+                    <aside class="ghost-sidebar">
+                        <div class="ghost-panel">
+                            <div class="ghost-stat-row">
+                                <span>열쇠</span>
+                                <strong id="ghost-keys-count">0 / 3</strong>
+                            </div>
+                            <div class="ghost-stat-row">
+                                <span>발견한 귀신</span>
+                                <strong id="ghost-found-count">0 / 3</strong>
+                            </div>
+                            <p class="ghost-small-copy">책상 아래, 사물함, 가방 주변을 잘 비춰 보세요.</p>
+                        </div>
+
+                        <div class="ghost-panel">
+                            <h4>찾은 귀신</h4>
+                            <div id="ghost-found-list" class="ghost-found-list"></div>
+                        </div>
+                    </aside>
+
+                    <div class="ghost-main">
+                        <div id="ghost-scene" class="ghost-scene">
+                            <div id="ghost-scene-art" class="ghost-scene-art" aria-hidden="true"></div>
+                            <div id="ghost-hotspots" class="ghost-hotspots">
+                                <button class="ghost-hotspot hotspot-locker" data-spot="locker" aria-label="사물함 살펴보기"></button>
+                                <button class="ghost-hotspot hotspot-desk" data-spot="desk" aria-label="책상 아래 살펴보기"></button>
+                                <button class="ghost-hotspot hotspot-bag" data-spot="bag" aria-label="가방 옆 살펴보기"></button>
+                            </div>
+                            <button id="ghost-door-button" class="ghost-door-button">문 열기</button>
+                        </div>
+
+                        <div id="ghost-quiz-panel" class="ghost-panel ghost-quiz-panel hidden">
+                            <h4 id="ghost-quiz-title">귀신이 문제를 냈어요</h4>
+                            <div class="ghost-angle-wrap">
+                                <canvas id="ghost-angle-canvas" width="320" height="180" aria-label="3번 게임 각도 문제"></canvas>
+                            </div>
+                            <div id="ghost-options" class="ghost-options">
+                                <button class="ghost-choice-btn" data-choice="acute">예각</button>
+                                <button class="ghost-choice-btn" data-choice="right">직각</button>
+                                <button class="ghost-choice-btn" data-choice="obtuse">둔각</button>
+                            </div>
+                            <div id="ghost-feedback" class="ghost-feedback"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="cannon-stage-section" class="cannon-stage-section hidden">
+                <div id="cannon-start-screen" class="cannon-card">
+                    <div class="cannon-card-art">🚢</div>
+                    <h3>각도 맞추기 게임</h3>
+                    <p class="cannon-card-copy">대포 아래의 각도를 보고 위의 세 숫자 중 알맞은 값을 고르세요. 맞히면 적의 배가 침몰하고, 틀리면 대포 기회가 하나 줄어듭니다.</p>
+                    <button id="cannon-start-button" class="primary-btn">4번 게임 시작</button>
+                </div>
+
+                <div id="cannon-win-screen" class="cannon-card hidden">
+                    <div class="cannon-card-art">🎯</div>
+                    <h3>바다 수비 성공!</h3>
+                    <p class="cannon-card-copy">10개의 각도 문제를 끝까지 풀어 적의 배를 막아 냈어요.</p>
+                    <div id="cannon-win-summary" class="cannon-summary-text"></div>
+                    <button id="cannon-restart-button" class="secondary-btn">다시 도전</button>
+                </div>
+
+                <div id="cannon-lose-screen" class="cannon-card hidden">
+                    <div class="cannon-card-art">💥</div>
+                    <h3>대포가 모두 터졌어요</h3>
+                    <p class="cannon-card-copy">각도를 다시 어림해 보면서 바다를 지켜 볼까요?</p>
+                    <div id="cannon-lose-summary" class="cannon-summary-text"></div>
+                    <button id="cannon-retry-button" class="primary-btn">다시 도전</button>
+                </div>
+
+                <div id="cannon-game-shell" class="cannon-game-shell hidden">
+                    <aside class="cannon-sidebar">
+                        <div class="cannon-panel">
+                            <div class="cannon-stat-row">
+                                <span>문제</span>
+                                <strong id="cannon-round">0 / 10</strong>
+                            </div>
+                            <div class="cannon-stat-row">
+                                <span>침몰</span>
+                                <strong id="cannon-score">0척</strong>
+                            </div>
+                            <p class="cannon-small-copy">위의 세 숫자 중 대포 아래 각도와 같은 값을 골라 보세요.</p>
+                        </div>
+
+                        <div class="cannon-panel">
+                            <h4>남은 대포</h4>
+                            <div id="cannon-lives-track" class="cannon-token-row"></div>
+                        </div>
+
+                        <div class="cannon-panel">
+                            <h4>배 진행</h4>
+                            <div id="cannon-fleet-track" class="cannon-fleet-track"></div>
+                        </div>
+                    </aside>
+
+                    <div class="cannon-main">
+                        <div id="cannon-scene" class="cannon-scene">
+                            <div id="cannon-options" class="cannon-options"></div>
+                            <div id="cannon-scene-art" class="cannon-scene-art" aria-hidden="true"></div>
+                        </div>
+
+                        <div class="cannon-panel">
+                            <div class="cannon-angle-wrap">
+                                <canvas id="cannon-angle-canvas" width="320" height="180" aria-label="4번 게임 각도 문제"></canvas>
+                            </div>
+                            <div id="cannon-feedback" class="cannon-feedback"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="school-stage-section" class="school-stage-section hidden">
+                <div id="school-start-screen" class="school-card">
+                    <div class="school-card-art">🏫</div>
+                    <h3>각도를 이용한 괴물 퇴치</h3>
+                    <p class="school-card-copy">정전된 학교를 살피며 교실마다 각도 문제를 풀어 보세요. 치료제, 지도, 무기를 모으고 마지막에 괴물왕을 물리치면 학교가 다시 안전해집니다.</p>
+                    <button id="school-start-button" class="primary-btn">5번 게임 시작</button>
+                </div>
+
+                <div id="school-win-screen" class="school-card hidden">
+                    <div class="school-card-art">✨</div>
+                    <h3>학교를 지켜 냈어요!</h3>
+                    <p class="school-card-copy">괴물왕을 물리치고 학교를 다시 평화롭게 만들었어요.</p>
+                    <div id="school-win-summary" class="school-summary-text"></div>
+                    <button id="school-restart-button" class="secondary-btn">다시 도전</button>
+                </div>
+
+                <div id="school-lose-screen" class="school-card hidden">
+                    <div class="school-card-art">🌙</div>
+                    <h3>정전 학교에서 쓰러졌어요</h3>
+                    <p class="school-card-copy">각도를 다시 연습해서 괴물왕에게 다시 도전해 볼까요?</p>
+                    <div id="school-lose-summary" class="school-summary-text"></div>
+                    <button id="school-retry-button" class="primary-btn">다시 도전</button>
+                </div>
+
+                <div id="school-game-shell" class="school-game-shell hidden">
+                    <aside class="school-sidebar">
+                        <div class="school-panel">
+                            <div class="school-stat-row">
+                                <span>체력</span>
+                                <div id="school-hp-track" class="school-hp-track"></div>
+                            </div>
+                            <div class="school-stat-row">
+                                <span>탐색</span>
+                                <strong id="school-solved-count">0 / 7</strong>
+                            </div>
+                            <div class="school-stat-row">
+                                <span>괴물왕</span>
+                                <strong id="school-boss-hp">잠김</strong>
+                            </div>
+                        </div>
+
+                        <div class="school-panel">
+                            <h4>가방 속 아이템</h4>
+                            <div id="school-inventory" class="school-item-list"></div>
+                        </div>
+                    </aside>
+
+                    <div class="school-main">
+                        <div class="school-scene">
+                            <div id="school-scene-art" class="school-scene-art" aria-hidden="true"></div>
+                            <div id="school-room-grid" class="school-room-grid"></div>
+                        </div>
+
+                        <div class="school-panel">
+                            <div class="school-question-head">
+                                <h4 id="school-question-title">교실을 눌러 탐색을 시작하세요.</h4>
+                                <button id="school-boss-button" class="ghost-btn hidden">괴물왕 대결</button>
+                            </div>
+                            <div class="school-angle-wrap">
+                                <canvas id="school-angle-canvas" width="320" height="180" aria-label="5번 게임 각도 문제"></canvas>
+                            </div>
+                            <div id="school-options" class="school-options"></div>
+                            <div id="school-feedback" class="school-feedback"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </div>
+
+    <script src="js/core/shared.js"></script>
+    <script src="js/games/game1.js"></script>
+    <script src="js/games/game2.js"></script>
+    <script src="js/games/game3.js"></script>
+    <script src="js/games/game4.js"></script>
+    <script src="js/games/game5.js"></script>
+    <script src="js/core/app.js"></script>
+</body>
+</html>
