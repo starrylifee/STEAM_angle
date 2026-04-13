@@ -2321,7 +2321,8 @@ button {
 .monster-stage-section,
 .ghost-stage-section,
 .cannon-stage-section,
-.school-stage-section {
+.school-stage-section,
+.game6-stage-section {
     flex: 1;
     min-height: 0;
     margin-top: 0;
@@ -2334,6 +2335,7 @@ button {
 .ghost-stage-section::-webkit-scrollbar,
 .cannon-stage-section::-webkit-scrollbar,
 .school-stage-section::-webkit-scrollbar,
+.game6-stage-section::-webkit-scrollbar,
 .monster-sidebar::-webkit-scrollbar,
 .monster-main::-webkit-scrollbar,
 .ghost-sidebar::-webkit-scrollbar,
@@ -2341,7 +2343,9 @@ button {
 .cannon-sidebar::-webkit-scrollbar,
 .cannon-main::-webkit-scrollbar,
 .school-sidebar::-webkit-scrollbar,
-.school-main::-webkit-scrollbar {
+.school-main::-webkit-scrollbar,
+.game6-sidebar::-webkit-scrollbar,
+.game6-main::-webkit-scrollbar {
     display: none;
 }
 
@@ -2363,7 +2367,8 @@ button {
 .monster-stage-section,
 .ghost-stage-section,
 .cannon-stage-section,
-.school-stage-section {
+.school-stage-section,
+.game6-stage-section {
     display: flex;
     flex-direction: column;
 }
@@ -2371,7 +2376,8 @@ button {
 .monster-card,
 .ghost-card,
 .cannon-card,
-.school-card {
+.school-card,
+.game6-card {
     min-height: 100%;
     justify-content: center;
     padding: 24px 22px;
@@ -2380,7 +2386,8 @@ button {
 .monster-game-shell,
 .ghost-game-shell,
 .cannon-game-shell,
-.school-game-shell {
+.school-game-shell,
+.game6-game-shell {
     min-height: 100%;
 }
 
@@ -2391,7 +2398,9 @@ button {
 .cannon-sidebar,
 .cannon-main,
 .school-sidebar,
-.school-main {
+.school-main,
+.game6-sidebar,
+.game6-main {
     min-height: 0;
     overflow: auto;
     scrollbar-width: none;
@@ -2750,4 +2759,355 @@ button {
     max-width: 320px;
     line-height: 1.6;
     color: rgba(255, 244, 241, 0.88);
+}
+
+.game6-stage-section {
+    margin-top: 10px;
+}
+
+.game6-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+    padding: 30px 22px;
+    border-radius: 28px;
+    background: linear-gradient(180deg, rgba(240, 244, 255, 0.99), rgba(228, 238, 255, 0.98));
+    color: var(--card-ink);
+    border: 1px solid rgba(91, 108, 255, 0.16);
+    box-shadow: 0 22px 40px rgba(57, 73, 171, 0.14);
+}
+
+.game6-card-art {
+    font-size: 3rem;
+}
+
+.game6-card h3 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+.game6-card-copy,
+.game6-summary-text {
+    margin: 0;
+    max-width: 620px;
+    line-height: 1.7;
+}
+
+.game6-summary-text {
+    font-weight: 800;
+    color: #3550d3;
+}
+
+.game6-game-shell {
+    display: grid;
+    grid-template-columns: 248px minmax(0, 1fr);
+    gap: 16px;
+}
+
+.game6-sidebar,
+.game6-main {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.game6-main {
+    min-width: 0;
+}
+
+.game6-panel {
+    padding: 16px;
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.96);
+    border: 1px solid rgba(23, 50, 77, 0.08);
+    box-shadow: 0 14px 24px rgba(16, 42, 67, 0.1);
+}
+
+.game6-panel h4 {
+    margin: 0 0 10px;
+    font-size: 1.02rem;
+    font-family: var(--font-display);
+}
+
+.game6-stat-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 16px;
+    background: rgba(91, 108, 255, 0.08);
+}
+
+.game6-stat-row + .game6-stat-row {
+    margin-top: 8px;
+}
+
+.game6-small-copy {
+    margin: 12px 0 0;
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: rgba(23, 50, 77, 0.7);
+}
+
+.game6-token-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.game6-token {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 52px;
+    min-height: 40px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    font-size: 0.84rem;
+    font-weight: 800;
+}
+
+.game6-token.active {
+    background: rgba(91, 108, 255, 0.16);
+    color: #3048c4;
+}
+
+.game6-token.lost {
+    background: rgba(23, 50, 77, 0.08);
+    color: rgba(23, 50, 77, 0.5);
+}
+
+.game6-progress-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.game6-progress-chip {
+    min-height: 46px;
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+    background: rgba(23, 50, 77, 0.08);
+    color: rgba(23, 50, 77, 0.68);
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-align: center;
+    line-height: 1.25;
+}
+
+.game6-progress-chip.is-current {
+    background: rgba(255, 209, 102, 0.28);
+    color: #8b5a00;
+}
+
+.game6-progress-chip.is-cleared {
+    background: rgba(31, 157, 85, 0.16);
+    color: #167544;
+}
+
+.game6-scene-card {
+    padding: 12px;
+    border-radius: 28px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(241, 246, 255, 0.96));
+    border: 1px solid rgba(23, 50, 77, 0.08);
+    box-shadow: 0 18px 34px rgba(16, 42, 67, 0.14);
+}
+
+#game6-scene-canvas {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 22px;
+}
+
+.game6-bottom-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: 14px;
+}
+
+.game6-controls {
+    display: grid;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.game6-controls.is-double {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.game6-joint-card {
+    padding: 12px;
+    border-radius: 18px;
+    background: rgba(91, 108, 255, 0.07);
+    border: 1px solid rgba(91, 108, 255, 0.12);
+}
+
+.game6-joint-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    font-weight: 800;
+}
+
+.game6-control-label {
+    margin-top: 10px;
+    font-size: 0.76rem;
+    font-weight: 800;
+    color: rgba(23, 50, 77, 0.68);
+}
+
+.game6-joint-copy {
+    margin: 8px 0 0;
+    font-size: 0.78rem;
+    line-height: 1.45;
+    color: rgba(23, 50, 77, 0.66);
+}
+
+.game6-controls.is-double .game6-joint-card {
+    padding: 10px;
+}
+
+.game6-controls.is-double .game6-control-label {
+    margin-top: 8px;
+    font-size: 0.72rem;
+}
+
+.game6-controls.is-double .game6-joint-copy {
+    margin-top: 6px;
+    font-size: 0.72rem;
+    line-height: 1.35;
+}
+
+.game6-joint-row {
+    display: grid;
+    grid-template-columns: 84px minmax(0, 1fr) 84px;
+    gap: 8px;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.game6-adjust-btn {
+    padding: 10px 12px;
+    border-radius: 14px;
+    background: #ffffff;
+    border: 2px solid rgba(91, 108, 255, 0.14);
+    color: var(--card-ink);
+    font-size: 0.92rem;
+    font-weight: 800;
+    box-shadow: 0 10px 18px rgba(91, 108, 255, 0.08);
+    transition: transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
+}
+
+.game6-controls.is-double .game6-joint-row {
+    grid-template-columns: 58px minmax(0, 1fr) 58px;
+    gap: 6px;
+}
+
+.game6-controls.is-double .game6-adjust-btn {
+    padding: 8px 6px;
+    font-size: 0.78rem;
+}
+
+.game6-adjust-btn:hover {
+    transform: translateY(-1px);
+    border-color: #5b6cff;
+    box-shadow: 0 12px 20px rgba(91, 108, 255, 0.14);
+}
+
+.game6-adjust-btn:disabled {
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+    color: rgba(23, 50, 77, 0.36);
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.game6-angle-pill {
+    min-height: 44px;
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(227, 236, 255, 0.96));
+    color: #3048c4;
+    font-size: 1.1rem;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+}
+
+.game6-controls.is-double .game6-angle-pill {
+    min-height: 38px;
+    font-size: 0.9rem;
+}
+
+.game6-action-row {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 14px;
+}
+
+.game6-angle-wrap {
+    padding: 10px 12px;
+    border-radius: 20px;
+    background: rgba(244, 247, 255, 0.98);
+    border: 1px solid rgba(23, 50, 77, 0.06);
+    display: flex;
+    justify-content: center;
+}
+
+#game6-angle-canvas {
+    width: min(100%, 320px);
+    height: auto;
+    display: block;
+}
+
+.game6-feedback {
+    min-height: 52px;
+    margin-top: 12px;
+    font-weight: 800;
+    line-height: 1.5;
+}
+
+.game6-feedback.good {
+    color: #16864c;
+}
+
+.game6-feedback.bad {
+    color: #d64545;
+}
+
+.game6-feedback.info {
+    color: #3550d3;
+}
+
+@media (max-width: 780px) {
+    .game6-game-shell {
+        grid-template-columns: 1fr;
+    }
+
+    .game6-sidebar {
+        order: 2;
+    }
+
+    .game6-main {
+        order: 1;
+    }
+
+    .game6-bottom-row {
+        grid-template-columns: 1fr;
+    }
+
+    .game6-controls.is-double {
+        grid-template-columns: 1fr;
+    }
+
+    .game6-joint-row {
+        grid-template-columns: 72px minmax(0, 1fr) 72px;
+    }
 }

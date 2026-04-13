@@ -43,7 +43,8 @@ const APP = (() => {
             2: "👾",
             3: "👻",
             4: "🚢",
-            5: "🏫"
+            5: "🏫",
+            6: "🌉"
         };
 
         if (mode === "button") {
@@ -92,11 +93,23 @@ const APP = (() => {
             `;
         }
 
+        if (game.id === 5) {
+            return `
+                <svg viewBox="0 0 160 96" class="${className}">
+                    <rect x="10" y="10" width="140" height="76" rx="22" fill="#f2f9e9"/>
+                    <rect x="88" y="18" width="40" height="48" rx="8" fill="#ffffff" stroke="#17324d" stroke-width="4"/>
+                    <circle cx="50" cy="52" r="16" fill="#fff2dd" stroke="#17324d" stroke-width="4"/>
+                </svg>
+            `;
+        }
+
         return `
             <svg viewBox="0 0 160 96" class="${className}">
-                <rect x="10" y="10" width="140" height="76" rx="22" fill="#f2f9e9"/>
-                <rect x="88" y="18" width="40" height="48" rx="8" fill="#ffffff" stroke="#17324d" stroke-width="4"/>
-                <circle cx="50" cy="52" r="16" fill="#fff2dd" stroke="#17324d" stroke-width="4"/>
+                <rect x="10" y="10" width="140" height="76" rx="22" fill="#eef1ff"/>
+                <path d="M30 70 L68 50 L100 58 L130 34" fill="none" stroke="#17324d" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="68" cy="50" r="6" fill="${game.accent}"/>
+                <circle cx="100" cy="58" r="6" fill="${game.accent}"/>
+                <rect x="116" y="28" width="18" height="12" rx="4" fill="#ffd166"/>
             </svg>
         `;
     }
@@ -130,6 +143,7 @@ const APP = (() => {
         setHidden(refs.ghostStageSection, true);
         setHidden(refs.cannonStageSection, true);
         setHidden(refs.schoolStageSection, true);
+        setHidden(refs.game6StageSection, true);
     }
 
     function openGameStage(gameId) {
@@ -175,9 +189,16 @@ const APP = (() => {
             return;
         }
 
-        refs.modalSubtitle.textContent = "학교를 탐색하고 마지막 괴물왕과 결전해 보세요.";
-        setHidden(refs.schoolStageSection, false);
-        resetSchoolGame();
+        if (game.id === 5) {
+            refs.modalSubtitle.textContent = "학교를 탐색하고 마지막 괴물왕과 결전해 보세요.";
+            setHidden(refs.schoolStageSection, false);
+            resetSchoolGame();
+            return;
+        }
+
+        refs.modalSubtitle.textContent = "접힌 다리를 각도와 길이로 펴고, 장애물에 닿기 전에 구조 발판까지 연결해 보세요.";
+        setHidden(refs.game6StageSection, false);
+        resetGame6();
     }
 
     function resetAllGamesForLobby() {
@@ -186,6 +207,7 @@ const APP = (() => {
         resetGhostGame();
         resetCannonGame();
         resetSchoolGame();
+        resetGame6();
         hideAllSections();
         refs.modalIllustration.innerHTML = "";
         refs.modalCredit.textContent = "제작: 학생 모두";
@@ -243,11 +265,13 @@ const APP = (() => {
         attachGame3Events();
         attachGame4Events();
         attachGame5Events();
+        attachGame6Events();
         resetGame();
         resetMonsterGame();
         resetGhostGame();
         resetCannonGame();
         resetSchoolGame();
+        resetGame6();
     }
 
     return {

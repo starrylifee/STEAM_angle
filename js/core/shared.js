@@ -56,6 +56,17 @@ const STEAM_ANGLE = (() => {
             ready: true,
             buttonLabel: "5번 게임 시작",
             tags: ["학교", "아이템", "보스"]
+        },
+        {
+            id: 6,
+            title: "접히는 다리 구조대",
+            description: "관절 회전 + 구조 연결",
+            meta: "각도의 본질 실험형 구현",
+            accent: "#5b6cff",
+            status: "플레이 가능",
+            ready: true,
+            buttonLabel: "6번 게임 시작",
+            tags: ["회전", "관절", "구조"]
         }
     ];
 
@@ -64,7 +75,8 @@ const STEAM_ANGLE = (() => {
         2: "카르르우유 · 반짝이 · 녹둥이",
         3: "파랑",
         4: "진창쿠키",
-        5: "천재 · 수호천사 외"
+        5: "천재 · 수호천사 외",
+        6: "각도 본질 실험실"
     };
 
     const refs = {
@@ -84,6 +96,7 @@ const STEAM_ANGLE = (() => {
         ghostStageSection: document.getElementById("ghost-stage-section"),
         cannonStageSection: document.getElementById("cannon-stage-section"),
         schoolStageSection: document.getElementById("school-stage-section"),
+        game6StageSection: document.getElementById("game6-stage-section"),
 
         gameWrapper: document.getElementById("game-wrapper"),
         gameCanvas: document.getElementById("gameCanvas"),
@@ -174,6 +187,26 @@ const STEAM_ANGLE = (() => {
         cannonWinSummary: document.getElementById("cannon-win-summary"),
         cannonLoseSummary: document.getElementById("cannon-lose-summary"),
 
+        game6StartScreen: document.getElementById("game6-start-screen"),
+        game6GameShell: document.getElementById("game6-game-shell"),
+        game6WinScreen: document.getElementById("game6-win-screen"),
+        game6LoseScreen: document.getElementById("game6-lose-screen"),
+        game6StartButton: document.getElementById("game6-start-button"),
+        game6RestartButton: document.getElementById("game6-restart-button"),
+        game6RetryButton: document.getElementById("game6-retry-button"),
+        game6Round: document.getElementById("game6-round"),
+        game6Score: document.getElementById("game6-score"),
+        game6LivesTrack: document.getElementById("game6-lives-track"),
+        game6FleetTrack: document.getElementById("game6-fleet-track"),
+        game6SceneCanvas: document.getElementById("game6-scene-canvas"),
+        game6AngleCanvas: document.getElementById("game6-angle-canvas"),
+        game6Controls: document.getElementById("game6-controls"),
+        game6FireButton: document.getElementById("game6-fire-button"),
+        game6Hint: document.getElementById("game6-hint"),
+        game6Feedback: document.getElementById("game6-feedback"),
+        game6WinSummary: document.getElementById("game6-win-summary"),
+        game6LoseSummary: document.getElementById("game6-lose-summary"),
+
         schoolStartScreen: document.getElementById("school-start-screen"),
         schoolGameShell: document.getElementById("school-game-shell"),
         schoolWinScreen: document.getElementById("school-win-screen"),
@@ -202,6 +235,8 @@ const STEAM_ANGLE = (() => {
     const monsterAngleCtx = refs.monsterAngleCanvas.getContext("2d");
     const ghostAngleCtx = refs.ghostAngleCanvas.getContext("2d");
     const cannonAngleCtx = refs.cannonAngleCanvas.getContext("2d");
+    const game6SceneCtx = refs.game6SceneCanvas.getContext("2d");
+    const game6AngleCtx = refs.game6AngleCanvas.getContext("2d");
     const schoolAngleCtx = refs.schoolAngleCanvas.getContext("2d");
 
     const appState = {
@@ -315,6 +350,8 @@ const STEAM_ANGLE = (() => {
         monsterAngleCtx,
         ghostAngleCtx,
         cannonAngleCtx,
+        game6SceneCtx,
+        game6AngleCtx,
         schoolAngleCtx,
         appState,
         totalHealth: 3,

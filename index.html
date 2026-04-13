@@ -451,6 +451,79 @@
                     </div>
                 </div>
             </section>
+            <section id="game6-stage-section" class="game6-stage-section hidden">
+                <div id="game6-start-screen" class="game6-card">
+                    <div class="game6-card-art">🌉</div>
+                    <h3>접히는 다리 구조대</h3>
+                    <p class="game6-card-copy">다리는 완전히 접힌 상태에서 시작합니다. 각도와 길이를 조금씩 조절해 노란 발판까지 안전하게 연결하세요. 붉은 장애물에 닿는 순간 바로 실패하고, 같은 단계를 다시 접힌 상태에서 시작합니다.</p>
+                    <button id="game6-start-button" class="primary-btn">6번 게임 시작</button>
+                </div>
+
+                <div id="game6-win-screen" class="game6-card hidden">
+                    <div class="game6-card-art">🛟</div>
+                    <h3>모든 구조 발판 연결 성공!</h3>
+                    <p class="game6-card-copy">초급과 중급 구조 미션을 모두 해결했어요. 각도를 조절할수록 다리의 끝점이 어떻게 달라지는지 잘 느꼈다면 성공입니다.</p>
+                    <div id="game6-win-summary" class="game6-summary-text"></div>
+                    <button id="game6-restart-button" class="secondary-btn">다시 도전</button>
+                </div>
+
+                <div id="game6-lose-screen" class="game6-card hidden">
+                    <div class="game6-card-art">🌊</div>
+                    <h3>구조 장비가 모두 소진됐어요</h3>
+                    <p class="game6-card-copy">실패한 자리에서 바로 각도를 다시 조절하면 더 빠르게 감이 잡혀요. 초급과 중급을 다시 이어서 도전해 볼까요?</p>
+                    <div id="game6-lose-summary" class="game6-summary-text"></div>
+                    <button id="game6-retry-button" class="primary-btn">다시 도전</button>
+                </div>
+
+                <div id="game6-game-shell" class="game6-game-shell hidden">
+                    <aside class="game6-sidebar">
+                        <div class="game6-panel">
+                            <div class="game6-stat-row">
+                                <span>단계</span>
+                                <strong id="game6-round">초급 1 / 6</strong>
+                            </div>
+                            <div class="game6-stat-row">
+                                <span>구조</span>
+                                <strong id="game6-score">0 / 6</strong>
+                            </div>
+                            <p id="game6-hint" class="game6-small-copy">접힌 다리를 펴서 노란 발판까지 안전하게 연결해 보세요.</p>
+                        </div>
+
+                        <div class="game6-panel">
+                            <h4>남은 구조 장비</h4>
+                            <div id="game6-lives-track" class="game6-token-row"></div>
+                        </div>
+
+                        <div class="game6-panel">
+                            <h4>구조 진행</h4>
+                            <div id="game6-fleet-track" class="game6-progress-grid"></div>
+                        </div>
+                    </aside>
+
+                    <div class="game6-main">
+                        <div class="game6-scene-card">
+                            <canvas id="game6-scene-canvas" width="720" height="380" aria-label="6번 게임 구조 다리 장면"></canvas>
+                        </div>
+
+                        <div class="game6-bottom-row">
+                            <div class="game6-panel">
+                                <h4>관절 조절</h4>
+                                <div id="game6-controls" class="game6-controls"></div>
+                                <div class="game6-action-row">
+                                    <button id="game6-fire-button" class="ghost-btn">이 단계 다시 접기</button>
+                                </div>
+                            </div>
+
+                            <div class="game6-panel">
+                                <div class="game6-angle-wrap">
+                                    <canvas id="game6-angle-canvas" width="320" height="180" aria-label="6번 게임 관절 각도 보기"></canvas>
+                                </div>
+                                <div id="game6-feedback" class="game6-feedback"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </section>
     </div>
 
@@ -460,6 +533,7 @@
     <script src="js/games/game3.js"></script>
     <script src="js/games/game4.js"></script>
     <script src="js/games/game5.js"></script>
+    <script src="js/games/game6.js"></script>
     <script src="js/core/app.js"></script>
 </body>
 </html>
