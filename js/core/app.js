@@ -266,8 +266,8 @@ const APP = (() => {
                 const gameTitle = refs.modalPdfButton.dataset.gameTitle;
                 if (pdfPath) {
                     refs.pdfModalTitle.textContent = `📋 학생 기획안 - ${gameTitle}`;
-                    refs.pdfIframe.src = pdfPath;
-                    refs.pdfDownloadLink.href = pdfPath;
+                    refs.pdfIframe.src = encodeURI(pdfPath);
+                    refs.pdfDownloadLink.href = encodeURI(pdfPath);
                     setHidden(refs.pdfModal, false);
                 }
             });
