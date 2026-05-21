@@ -12,7 +12,7 @@ const STEAM_ANGLE = (() => {
             ready: true,
             buttonLabel: "1번 게임 시작",
             tags: ["달리기", "퀴즈"],
-            pdfPath: "source/각도퍼즐을찾아라.pdf"
+            pdfPath: "source/game1_puzzle.pdf"
         },
         {
             id: 2,
@@ -24,7 +24,7 @@ const STEAM_ANGLE = (() => {
             ready: true,
             buttonLabel: "2번 게임 시작",
             tags: ["어림", "몬스터", "랜덤박스"],
-            pdfPath: "source/각도를어림해서몬스터를동료로만들어라.pdf"
+            pdfPath: "source/game2_monster.pdf"
         },
         {
             id: 3,
@@ -36,7 +36,7 @@ const STEAM_ANGLE = (() => {
             ready: true,
             buttonLabel: "3번 게임 시작",
             tags: ["탐색", "직각", "탈출"],
-            pdfPath: "source/새벽3시귀신스쿨.pdf"
+            pdfPath: "source/game3_ghost.pdf"
         },
         {
             id: 4,
@@ -48,7 +48,7 @@ const STEAM_ANGLE = (() => {
             ready: true,
             buttonLabel: "4번 게임 시작",
             tags: ["대포", "어림", "침몰"],
-            pdfPath: "source/각도맞추기게임.pdf"
+            pdfPath: "source/game4_cannon.pdf"
         },
         {
             id: 5,
@@ -60,7 +60,7 @@ const STEAM_ANGLE = (() => {
             ready: true,
             buttonLabel: "5번 게임 시작",
             tags: ["학교", "아이템", "보스"],
-            pdfPath: "source/각도를이용한괴물퇴치.pdf"
+            pdfPath: "source/game5_school.pdf"
         },
         {
             id: 6,
