@@ -128,7 +128,10 @@ const APP = (() => {
                         <span class="title-button-index">${String(game.id).padStart(2, "0")}</span>
                         <span class="title-button-title">${game.title}</span>
                     </span>
-                    <span class="title-button-credit">제작: ${getGameCredit(game.id)}</span>
+                    <span class="title-button-credit">
+                        제작: ${getGameCredit(game.id)}
+                        ${game.pdfPath ? '<span class="pdf-lobby-badge">✏️ 학생 기획안 수록</span>' : ''}
+                    </span>
                 </span>
                 <span class="title-button-visual" aria-hidden="true">${getGamePreviewMarkup(game, "button")}</span>
             `;
@@ -160,6 +163,14 @@ const APP = (() => {
         refs.modalCredit.textContent = `제작: ${getGameCredit(game.id)}`;
         refs.modalIllustration.innerHTML = getGamePreviewMarkup(game, "modal");
         hideAllSections();
+
+        if (game.pdfPath) {
+            setHidden(refs.modalPdfButton, false);
+            refs.modalPdfButton.dataset.pdfPath = game.pdfPath;
+            refs.modalPdfButton.dataset.gameTitle = game.title;
+        } else {
+            setHidden(refs.modalPdfButton, true);
+        }
 
         if (game.id === 1) {
             refs.modalSubtitle.textContent = "Space로 점프하고 퍼즐 9개를 모아 보세요.";
@@ -201,6 +212,13 @@ const APP = (() => {
         resetGame6();
     }
 
+    function closePdfModal() {
+        setHidden(refs.pdfModal, true);
+        if (refs.pdfIframe) {
+            refs.pdfIframe.src = "";
+        }
+    }
+
     function resetAllGamesForLobby() {
         resetGame();
         resetMonsterGame();
@@ -211,12 +229,14 @@ const APP = (() => {
         hideAllSections();
         refs.modalIllustration.innerHTML = "";
         refs.modalCredit.textContent = "제작: 학생 모두";
+        setHidden(refs.modalPdfButton, true);
     }
 
     function closeGameStage() {
         setHidden(refs.gameModal, true);
         document.body.classList.remove("modal-open");
         appState.currentModalGameId = null;
+        closePdfModal();
 
         window.setTimeout(() => {
             resetAllGamesForLobby();
@@ -239,9 +259,36 @@ const APP = (() => {
         });
         refs.endBackButton.addEventListener("click", closeGameStage);
         refs.gameoverBackButton.addEventListener("click", closeGameStage);
+
+        if (refs.modalPdfButton) {
+            refs.modalPdfButton.addEventListener("click", () => {
+                const pdfPath = refs.modalPdfButton.dataset.pdfPath;
+                const gameTitle = refs.modalPdfButton.dataset.gameTitle;
+                if (pdfPath) {
+                    refs.pdfModalTitle.textContent = `📋 학생 기획안 - ${gameTitle}`;
+                    refs.pdfIframe.src = pdfPath;
+                    refs.pdfDownloadLink.href = pdfPath;
+                    setHidden(refs.pdfModal, false);
+                }
+            });
+        }
+
+        if (refs.pdfCloseButton) {
+            refs.pdfCloseButton.addEventListener("click", closePdfModal);
+        }
+        if (refs.pdfModalBackdrop) {
+            refs.pdfModalBackdrop.addEventListener("click", closePdfModal);
+        }
+
         window.addEventListener("keydown", (event) => {
-            if (event.code === "Escape" && !refs.gameModal.classList.contains("hidden")) {
-                closeGameStage();
+            if (event.code === "Escape") {
+                if (!refs.pdfModal.classList.contains("hidden")) {
+                    closePdfModal();
+                    event.stopPropagation();
+                    event.preventDefault();
+                } else if (!refs.gameModal.classList.contains("hidden")) {
+                    closeGameStage();
+                }
             }
         });
     }

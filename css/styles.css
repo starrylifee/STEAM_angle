@@ -3109,5 +3109,191 @@ button {
 
     .game6-joint-row {
         grid-template-columns: 72px minmax(0, 1fr) 72px;
+}
+}
+
+/* ==========================================================================
+   Student Planning PDF Feature Styles
+   ========================================================================== */
+
+/* Lobby Badge Styling */
+.pdf-lobby-badge {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 8px;
+    padding: 2px 8px;
+    border-radius: 6px;
+    background: rgba(255, 140, 66, 0.12);
+    color: #ff7824;
+    font-size: 0.68rem;
+    font-weight: 800;
+    border: 1px solid rgba(255, 140, 66, 0.2);
+    vertical-align: middle;
+}
+
+/* Modal Credit & PDF button row */
+.modal-meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.modal-meta-row .modal-credit {
+    margin-top: 0;
+}
+
+/* Modal PDF Button */
+.modal-pdf-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #ff8c42, #ffb703);
+    border: none;
+    font-size: 0.76rem;
+    font-weight: 800;
+    line-height: 1.1;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(255, 140, 66, 0.25);
+    transition: transform 0.16s ease, box-shadow 0.16s ease;
+}
+
+.modal-pdf-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 14px rgba(255, 140, 66, 0.4);
+}
+
+.modal-pdf-btn:active {
+    transform: translateY(1px);
+}
+
+/* PDF Overlay Modal */
+.pdf-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+.pdf-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(13, 27, 42, 0.6);
+    backdrop-filter: blur(12px);
+}
+
+.pdf-modal-card {
+    position: relative;
+    width: min(1000px, 95vw);
+    height: min(800px, 85vh);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: var(--radius-xl);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 32px 72px rgba(16, 42, 67, 0.35);
+    animation: pdfModalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes pdfModalFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.96) translateY(10px);
     }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.pdf-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--line-soft);
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.pdf-modal-title-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.pdf-modal-icon {
+    font-size: 1.8rem;
+}
+
+.pdf-modal-title-area h3 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    color: var(--card-ink);
+}
+
+.pdf-modal-subtitle {
+    margin: 4px 0 0;
+    font-size: 0.8rem;
+    color: rgba(23, 50, 77, 0.6);
+}
+
+.pdf-modal-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.pdf-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 18px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    text-decoration: none;
+    transition: transform 0.16s ease, background 0.16s ease, color 0.16s ease;
+}
+
+.pdf-btn:hover {
+    transform: translateY(-1px);
+}
+
+.pdf-btn-open {
+    background: linear-gradient(180deg, #ffd166, #ffb703);
+    color: #17324d;
+    box-shadow: 0 4px 12px rgba(255, 183, 3, 0.25);
+}
+
+.pdf-btn-open:hover {
+    box-shadow: 0 6px 16px rgba(255, 183, 3, 0.4);
+}
+
+.pdf-btn-close {
+    background: rgba(23, 50, 77, 0.08);
+    color: var(--card-ink);
+    border: none;
+    cursor: pointer;
+}
+
+.pdf-btn-close:hover {
+    background: rgba(23, 50, 77, 0.14);
+}
+
+.pdf-modal-body {
+    flex: 1;
+    padding: 16px;
+    background: rgba(23, 50, 77, 0.03);
+    min-height: 0;
 }

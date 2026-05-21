@@ -57,7 +57,10 @@
                         <h2 id="stage-title">1번 게임 · 각도 퍼즐을 찾아라!</h2>
                     </div>
                     <p id="modal-subtitle" class="modal-subtitle">게임을 시작해 보세요.</p>
-                    <p id="modal-credit" class="modal-credit">제작: 학생 모둠</p>
+                    <div class="modal-meta-row">
+                        <p id="modal-credit" class="modal-credit">제작: 학생 모둠</p>
+                        <button id="modal-pdf-button" class="modal-pdf-btn hidden" type="button">📋 학생 기획안 (PDF) 보기</button>
+                    </div>
                 </div>
             </div>
             <div id="modal-illustration" class="modal-illustration" aria-hidden="true"></div>
@@ -524,6 +527,28 @@
                     </div>
                 </div>
             </section>
+        </section>
+    </div>
+    
+    <div id="pdf-modal" class="pdf-modal hidden" aria-live="polite">
+        <div id="pdf-modal-backdrop" class="pdf-modal-backdrop"></div>
+        <section class="pdf-modal-card">
+            <div class="pdf-modal-header">
+                <div class="pdf-modal-title-area">
+                    <span class="pdf-modal-icon">📋</span>
+                    <div>
+                        <h3 id="pdf-modal-title">학생 기획안</h3>
+                        <p class="pdf-modal-subtitle">학생들이 직접 기획한 스케치와 기획안입니다.</p>
+                    </div>
+                </div>
+                <div class="pdf-modal-actions">
+                    <a id="pdf-download-link" href="#" target="_blank" class="pdf-btn pdf-btn-open">새 창으로 열기 ↗</a>
+                    <button id="pdf-close-button" class="pdf-btn pdf-btn-close" type="button">닫기</button>
+                </div>
+            </div>
+            <div class="pdf-modal-body">
+                <iframe id="pdf-iframe" src="" width="100%" height="100%" style="border: none; border-radius: 12px; background: white;"></iframe>
+            </div>
         </section>
     </div>
 
