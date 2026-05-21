@@ -95,6 +95,7 @@ const STEAM_ANGLE = (() => {
         modalCredit: document.getElementById("modal-credit"),
         modalIllustration: document.getElementById("modal-illustration"),
         modalPdfButton: document.getElementById("modal-pdf-button"),
+        floatingPdfButton: document.getElementById("floating-pdf-button"),
         pdfModal: document.getElementById("pdf-modal"),
         pdfModalBackdrop: document.getElementById("pdf-modal-backdrop"),
         pdfCloseButton: document.getElementById("pdf-close-button"),

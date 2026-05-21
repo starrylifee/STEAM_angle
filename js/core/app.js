@@ -168,8 +168,14 @@ const APP = (() => {
             setHidden(refs.modalPdfButton, false);
             refs.modalPdfButton.dataset.pdfPath = game.pdfPath;
             refs.modalPdfButton.dataset.gameTitle = game.title;
+            if (refs.floatingPdfButton) {
+                setHidden(refs.floatingPdfButton, false);
+            }
         } else {
             setHidden(refs.modalPdfButton, true);
+            if (refs.floatingPdfButton) {
+                setHidden(refs.floatingPdfButton, true);
+            }
         }
 
         if (game.id === 1) {
@@ -230,6 +236,9 @@ const APP = (() => {
         refs.modalIllustration.innerHTML = "";
         refs.modalCredit.textContent = "제작: 학생 모두";
         setHidden(refs.modalPdfButton, true);
+        if (refs.floatingPdfButton) {
+            setHidden(refs.floatingPdfButton, true);
+        }
     }
 
     function closeGameStage() {
@@ -245,24 +254,6 @@ const APP = (() => {
 
     function attachEvents() {
         refs.gameGrid.addEventListener("click", (event) => {
-            const badge = event.target.closest(".pdf-lobby-badge");
-            if (badge) {
-                event.preventDefault();
-                event.stopPropagation();
-                const button = badge.closest(".title-button");
-                if (button) {
-                    const gameId = Number(button.dataset.gameId);
-                    const game = games.find((item) => item.id === gameId);
-                    if (game && game.pdfPath) {
-                        refs.pdfModalTitle.textContent = `📋 학생 기획안 - ${game.title}`;
-                        refs.pdfIframe.src = encodeURI(game.pdfPath);
-                        refs.pdfDownloadLink.href = encodeURI(game.pdfPath);
-                        setHidden(refs.pdfModal, false);
-                    }
-                }
-                return;
-            }
-
             const button = event.target.closest(".title-button");
             if (!button) {
                 return;
@@ -286,6 +277,18 @@ const APP = (() => {
                     refs.pdfModalTitle.textContent = `📋 학생 기획안 - ${gameTitle}`;
                     refs.pdfIframe.src = encodeURI(pdfPath);
                     refs.pdfDownloadLink.href = encodeURI(pdfPath);
+                    setHidden(refs.pdfModal, false);
+                }
+            });
+        }
+
+        if (refs.floatingPdfButton) {
+            refs.floatingPdfButton.addEventListener("click", () => {
+                const game = games.find((item) => item.id === appState.currentModalGameId);
+                if (game && game.pdfPath) {
+                    refs.pdfModalTitle.textContent = `📋 학생 기획안 - ${game.title}`;
+                    refs.pdfIframe.src = encodeURI(game.pdfPath);
+                    refs.pdfDownloadLink.href = encodeURI(game.pdfPath);
                     setHidden(refs.pdfModal, false);
                 }
             });
