@@ -3129,6 +3129,14 @@ button {
     font-weight: 800;
     border: 1px solid rgba(255, 140, 66, 0.2);
     vertical-align: middle;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.pdf-lobby-badge:hover {
+    background: rgba(255, 140, 66, 0.24);
+    transform: scale(1.06);
+    box-shadow: 0 2px 6px rgba(255, 140, 66, 0.15);
 }
 
 /* Modal Credit & PDF button row */

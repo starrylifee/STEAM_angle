@@ -245,6 +245,24 @@ const APP = (() => {
 
     function attachEvents() {
         refs.gameGrid.addEventListener("click", (event) => {
+            const badge = event.target.closest(".pdf-lobby-badge");
+            if (badge) {
+                event.preventDefault();
+                event.stopPropagation();
+                const button = badge.closest(".title-button");
+                if (button) {
+                    const gameId = Number(button.dataset.gameId);
+                    const game = games.find((item) => item.id === gameId);
+                    if (game && game.pdfPath) {
+                        refs.pdfModalTitle.textContent = `📋 학생 기획안 - ${game.title}`;
+                        refs.pdfIframe.src = encodeURI(game.pdfPath);
+                        refs.pdfDownloadLink.href = encodeURI(game.pdfPath);
+                        setHidden(refs.pdfModal, false);
+                    }
+                }
+                return;
+            }
+
             const button = event.target.closest(".title-button");
             if (!button) {
                 return;
